@@ -1,0 +1,1 @@
+-- sqlfluff:dialect:postgres
