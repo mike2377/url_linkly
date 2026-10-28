@@ -25,3 +25,5 @@ Thumbs.db
 
 # test coverage
 coverage/
+
+src/db/schema.sql
