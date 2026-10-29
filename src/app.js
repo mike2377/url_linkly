@@ -3,7 +3,7 @@ import { healthRouter } from './routes/health.js'
 import { linksRouter } from './routes/links.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
-export function createApp() {
+export function createApp () {
   const app = express()
 
   // parse json request body

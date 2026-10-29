@@ -5,7 +5,7 @@ import { ConflictError } from '#src/utils/errors.js'
 const MAX_RETRIES = 5
 
 // create link if code is provides, otherwise generate random codes and retry on collision
-export async function createLink({ targetUrl, code, expiresAt }) {
+export async function createLink ({ targetUrl, code, expiresAt }) {
   if (code) {
     const result = await insertLink({ targetUrl, code, expiresAt })
     if (result.conflict) {
@@ -24,7 +24,7 @@ export async function createLink({ targetUrl, code, expiresAt }) {
 }
 
 // INSERT, sql queries are parameterized to prevent sql injection, if code is taken, postgresql returns unique_violation (23505)
-async function insertLink({ targetUrl, code, expiresAt }) {
+async function insertLink ({ targetUrl, code, expiresAt }) {
   try {
     const { rows } = await pool.query(
       `INSERT INTO links (code, target_url, expires_at)
@@ -40,7 +40,7 @@ async function insertLink({ targetUrl, code, expiresAt }) {
 }
 
 // retrieve link by code
-export async function findLinkByCode(code) {
+export async function findLinkByCode (code) {
   const { rows } = await pool.query(
     `SELECT id, code, target_url, created_at, expires_at, click_count
      FROM links
