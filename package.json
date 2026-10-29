@@ -12,7 +12,7 @@
   "scripts": {
     "start": "node src/server.js",
     "dev": "node --watch src/server.js",
-    "test": "node --test test/",
+    "test": "NODE_ENV=test node --test --test-concurrency=1 test/*.test.js",
     "lint": "eslint . --config eslint.local.config.js",
     "lint:fix": "eslint . --config eslint.local.config.js --fix",
     "format": "prettier --write .",
