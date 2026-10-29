@@ -17,7 +17,7 @@
     "lint:fix": "eslint . --config eslint.local.config.js --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "db:setup": "psql -f src/db/schema.sql"
+    "db:setup": "node scripts/db-setup.js"
   },
   "keywords": [],
   "dependencies": {
