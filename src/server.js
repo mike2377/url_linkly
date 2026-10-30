@@ -9,7 +9,7 @@ const server = app.listen(config.port, () => {
 })
 
 // Graceful shutdown: stop accepting requests, close the pool, exit
-async function shutdown (signal) {
+async function shutdown(signal) {
   console.log(`\n${signal} received, shutting down...`)
   server.close(async () => {
     await pool.end()
