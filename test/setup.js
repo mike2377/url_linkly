@@ -15,18 +15,18 @@ const here = path.dirname(fileURLToPath(import.meta.url))
 const schemaPath = path.join(here, '..', 'src', 'db', 'schema.sql')
 
 // apply schema to test db
-export async function initTestDb() {
+export async function initTestDb () {
   const sql = await readFile(schemaPath, 'utf8')
   await pool.query(sql)
 }
 
 // Clears data between tests
 // RESTART IDENTITY allows for the retention of identifiers
-export async function resetTestDb() {
+export async function resetTestDb () {
   await pool.query('TRUNCATE clicks, links RESTART IDENTITY CASCADE')
 }
 
 // close pool
-export async function closeTestDb() {
+export async function closeTestDb () {
   await pool.end()
 }

@@ -2,7 +2,7 @@ import { pool } from '../db.js'
 import { NotFoundError } from '../utils/errors.js'
 
 // count click and record
-export async function recordClick(linkId, { referrer, userAgent }) {
+export async function recordClick (linkId, { referrer, userAgent }) {
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
