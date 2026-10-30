@@ -1,0 +1,28 @@
+# dependencies
+node_modules/
+dist/
+
+# environment variables
+.env
+.env.test
+.env.local
+.env.*.local
+
+# logs
+*.log
+npm-debug.log*
+
+# os files
+.DS_Store
+Thumbs.db
+
+# editor files
+.idea/
+.vscode/
+
+# eslint cache
+.eslintcache
+
+# test coverage
+coverage/
+

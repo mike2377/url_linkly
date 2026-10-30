@@ -1,0 +1,26 @@
+-- sqlfluff:dialect:postgres
+
+-- Drop in dependency order (children first)
+DROP TABLE IF EXISTS clicks;
+DROP TABLE IF EXISTS links;
+
+CREATE TABLE links (
+    id SERIAL PRIMARY KEY,
+    code VARCHAR(16) UNIQUE NOT NULL,
+    target_url TEXT NOT NULL,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    expires_at TIMESTAMPTZ,
+    click_count INTEGER NOT NULL DEFAULT 0 CHECK (click_count >= 0)
+);
+
+CREATE TABLE clicks (
+    id SERIAL PRIMARY KEY,
+    link_id INTEGER NOT NULL REFERENCES links(id) ON DELETE CASCADE,
+    clicked_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    referrer TEXT,
+    user_agent TEXT
+);
+
+-- Indexes for the click log and keyset pagination
+CREATE INDEX clicks_link_id_clicked_at_idx ON clicks (link_id, clicked_at);
+CREATE INDEX clicks_link_id_id_desc_idx ON clicks (link_id, id DESC);
