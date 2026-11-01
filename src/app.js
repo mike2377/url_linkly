@@ -5,7 +5,7 @@ import { clicksRouter } from './routes/clicks.js'
 import { redirectRouter } from './routes/redirect.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
-export function createApp() {
+export function createApp () {
   const app = express()
 
   // parse json request body

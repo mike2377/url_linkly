@@ -4,7 +4,7 @@ import { HttpError } from '../utils/errors.js'
 
 // express requires to recognize this as an error handler
 // eslint-disable-next-line no-unused-vars
-export function errorHandler(err, req, res, next) {
+export function errorHandler (err, req, res, next) {
   // zod validation errors
   if (err instanceof ZodError) {
     return res.status(400).json({
