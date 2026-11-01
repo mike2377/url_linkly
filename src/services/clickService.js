@@ -1,8 +1,9 @@
 import { pool } from '../db.js'
 import { NotFoundError } from '../utils/errors.js'
+import { writeCsvHeader, writeCsvRow } from '../utils/csv.js'
 
 // count click and record
-export async function recordClick (linkId, { referrer, userAgent }) {
+export async function recordClick(linkId, { referrer, userAgent }) {
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
@@ -29,4 +30,52 @@ export async function recordClick (linkId, { referrer, userAgent }) {
   } finally {
     client.release()
   }
+}
+
+// pagination
+export async function listClickForLink(linkId, { after, limit }) {
+  const { rows } = await pool.query(
+    `SELECT id, clicked_at, referrer, user_agent
+    FROM clicks
+    WHERE link_id = $1
+      AND ($2::int IS NULL OR id < $2)
+    ORDER BY id DESC
+    LIMIT $3`,
+    [linkId, after ?? null, limit + 1]
+  )
+
+  const hasMore = rows.length > limit
+  const data = hasMore ? rows.slice(0, limit) : rows
+  const nextCursor = hasMore ? data[data.length - 1].id : null
+
+  return { data, next_cursor: nextCursor }
+}
+
+// streams the full click loadind in memoriy
+export async function streamClickCsv(linkId, res) {
+  writeCsvHeader(res, ['id', 'clicked_at', 'referrer', 'user_agent'], 'clicks.csv')
+
+  const BATCH = 1000
+  let after = null
+
+  while (true) {
+    const { rows } = await pool.query(
+      `SELECT id, clicked_at, referrer, user_agent
+      FROM clicks
+      WHERE link_id = $1 AND ($2::int IS NULL OR id < $2)
+      ORDER BY id DESC LIMIT $3`,
+      [linkId, after, BATCH]
+    )
+
+    if (rows.length === 0) break
+
+    for (const row of rows) {
+      writeCsvRow(res, [row.id, row.clicked_at.toISOString(), row.referrer, row.user_agent])
+    }
+
+    after = rows[rows.length - 1].id
+    if (rows.length < BATCH) break
+  }
+
+  res.end()
 }

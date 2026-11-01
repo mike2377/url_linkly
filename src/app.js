@@ -1,10 +1,11 @@
 import express from 'express'
 import { healthRouter } from './routes/health.js'
 import { linksRouter } from './routes/links.js'
+import { clicksRouter } from './routes/clicks.js'
 import { redirectRouter } from './routes/redirect.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
-export function createApp () {
+export function createApp() {
   const app = express()
 
   // parse json request body
@@ -13,6 +14,7 @@ export function createApp () {
   // Routes
   app.use('/health', healthRouter)
   app.use('/links', linksRouter)
+  app.use('/links', clicksRouter)
   app.use('/', redirectRouter)
 
   // Catch unmatched routes

@@ -1,6 +1,6 @@
 import { Router } from 'express'
 import { createLinkSchema } from '../schemas/linkSchemas.js'
-import { createLink, findLinkByCode } from '../services/linkService.js'
+import { createLink, findLinkByCode, deleteLinkByCode } from '../services/linkService.js'
 import { NotFoundError } from '../utils/errors.js'
 
 export const linksRouter = Router()
@@ -39,4 +39,11 @@ linksRouter.get('/:code', async (req, res) => {
     expires_at: link.expires_at,
     click_count: link.click_count
   })
+})
+
+// DELETE /links/:code = delete link and your clicks
+linksRouter.delete('/:code', async (req, res) => {
+  const deleted = await deleteLinkByCode(req.params.code)
+  if (!deleted) throw new NotFoundError('Link not found')
+  res.status(204).end()
 })
