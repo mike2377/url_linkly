@@ -1,5 +1,5 @@
 {
-  "openapi": "3.1.0",
+  "openapi": "3.0.3",
   "info": {
     "title": "Linkly API",
     "version": "1.0.0",
@@ -127,7 +127,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/LinkMetadata"
+                  "$ref": "#/components/schemas/Link"
                 }
               }
             }
@@ -326,9 +326,9 @@
           "expires_at": {
             "type": [
               "string",
-              "null"
             ],
-            "format": "date-time"
+            "format": "date-time",
+            "nullable": true
           },
           "click_count": {
             "type": "integer",
@@ -336,33 +336,7 @@
           }
         }
       },
-      "LinkMetadata": {
-        "type": "object",
-        "properties": {
-          "code": {
-            "type": "string"
-          },
-          "target_url": {
-            "type": "string",
-            "format": "url"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "expires_at": {
-            "type": [
-              "string",
-              "null"
-            ],
-            "format": "date-time"
-          },
-          "click_count": {
-            "type": "integer",
-            "minimum": 0
-          }
-        }
-      },
+
       "Click": {
         "type": "object",
         "properties": {
@@ -374,16 +348,12 @@
             "format": "date-time"
           },
           "referrer": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string",
+            "nullable": true
           },
           "user_agent": {
-            "type": [
-              "string",
-              "null"
-            ]
+            "type": "string",
+            "nullable": true
           }
         }
       },
@@ -397,10 +367,8 @@
             }
           },
           "next_cursor": {
-            "type": [
-              "integer",
-              "null"
-            ],
+            "type": "integer",
+            "nullable": true,
             "description": "Pass as ?after= on next request (Null for no more pages)"
           }
         }

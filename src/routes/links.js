@@ -38,6 +38,7 @@ linksRouter.get('/:code', async (req, res) => {
   res.json({
     code: link.code,
     target_url: link.target_url,
+    short_url: `${req.protocol}://${req.get('host')}/${link.code}`,
     created_at: link.created_at,
     expires_at: link.expires_at,
     click_count: link.click_count
