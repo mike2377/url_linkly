@@ -5,7 +5,7 @@
     "version": "1.0.0",
     "description": "A URL shortener with analytics. Turn long URLs into short codes, redirect visitors, and track clicks with an atomic counter"
   },
-  "server": [
+  "servers": [
     {
       "url": "http://localhost:3000",
       "description": "Local development"
@@ -247,7 +247,7 @@
             "$ref": "#/components/parameters/Code"
           }
         ],
-        "response": {
+        "responses": {
           "302": {
             "description": "Found, redirect to target_rul",
             "headers": {
@@ -324,9 +324,7 @@
             "format": "date-time"
           },
           "expires_at": {
-            "type": [
-              "string",
-            ],
+            "type": "string",
             "format": "date-time",
             "nullable": true
           },
@@ -375,7 +373,7 @@
       },
       "Error": {
         "type": "object",
-        "propeerties": {
+        "properties": {
           "error": {
             "type": "string"
           },
