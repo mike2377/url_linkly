@@ -8,6 +8,18 @@ export const linksRouter = Router()
 
 const createLinkLimiter = createRateLimiter({ windowMs: 60_000, max: 100 })
 
+// function one place to remove JSCPD for return POST and GET
+function serialLink (link, req) {
+  return {
+    code: link.code,
+    target_url: link.target_url,
+    short_url: `${req.protocol}://${req.get('host')}/${link.code}`,
+    created_at: link.created_at,
+    expires_at: link.expires_at,
+    click_count: link.click_count
+  }
+}
+
 // POST /links - create link
 linksRouter.post('/', createLinkLimiter, async (req, res) => {
   // Parse with Zod
@@ -20,14 +32,7 @@ linksRouter.post('/', createLinkLimiter, async (req, res) => {
   })
 
   // build short url
-  res.status(201).json({
-    code: link.code,
-    target_url: link.target_url,
-    short_url: `${req.protocol}://${req.get('host')}/${link.code}`,
-    created_at: link.created_at,
-    expires_at: link.expires_at,
-    click_count: link.click_count
-  })
+  res.status(201).json(serialLink(link, req))
 })
 
 // GET /links with code
@@ -35,14 +40,7 @@ linksRouter.get('/:code', async (req, res) => {
   const link = await findLinkByCode(req.params.code)
   if (!link) throw new NotFoundError('Link not found')
 
-  res.json({
-    code: link.code,
-    target_url: link.target_url,
-    short_url: `${req.protocol}://${req.get('host')}/${link.code}`,
-    created_at: link.created_at,
-    expires_at: link.expires_at,
-    click_count: link.click_count
-  })
+  res.json(serialLink(link, req))
 })
 
 // DELETE /links/:code = delete link and your clicks
