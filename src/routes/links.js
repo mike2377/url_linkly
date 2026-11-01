@@ -1,12 +1,15 @@
 import { Router } from 'express'
 import { createLinkSchema } from '../schemas/linkSchemas.js'
 import { createLink, findLinkByCode, deleteLinkByCode } from '../services/linkService.js'
+import { createRateLimiter } from '#src/middleware/rateLimit.js'
 import { NotFoundError } from '../utils/errors.js'
 
 export const linksRouter = Router()
 
+const createLinkLimiter = createRateLimiter({ windowMs: 60_000, max: 100 })
+
 // POST /links - create link
-linksRouter.post('/', async (req, res) => {
+linksRouter.post('/', createLinkLimiter, async (req, res) => {
   // Parse with Zod
   const data = createLinkSchema.parse(req.body)
 

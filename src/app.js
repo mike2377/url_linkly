@@ -1,15 +1,24 @@
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
+import { readFileSync } from 'node:fs'
+import { fileURLToPath } from 'node:url'
+import path from 'node:path'
 import { healthRouter } from './routes/health.js'
 import { linksRouter } from './routes/links.js'
 import { clicksRouter } from './routes/clicks.js'
 import { redirectRouter } from './routes/redirect.js'
 import { errorHandler } from './middleware/errorHandler.js'
 
+const here = path.dirname(fileURLToPath(import.meta.url))
+const openapiSpec = JSON.parse(readFileSync(path.join(here, 'docs', 'openapi.json'), 'utf-8'))
+
 export function createApp () {
   const app = express()
 
   // parse json request body
   app.use(express.json({ limit: '16kb' }))
+
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(openapiSpec))
 
   // Routes
   app.use('/health', healthRouter)
