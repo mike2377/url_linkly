@@ -208,7 +208,7 @@
         }
       }
     },
-    "/clicks/{code}/clicks.csv": {
+    "/links/{code}/clicks.csv": {
       "get": {
         "tags": [
           "Analytics"
