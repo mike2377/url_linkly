@@ -9,12 +9,12 @@ export const redirectRouter = Router()
 redirectRouter.get('/:code', async (req, res) => {
   const link = await findLinkByCode(req.params.code)
 
-  // unknow code = 404
-  if (!link) throw new NotFoundError('limk not found')
+  // unknown code = 404
+  if (!link) throw new NotFoundError('link not found')
 
-  // expire = 410 Gone
+  // expired = 410 Gone
   if (link.expires_at && new Date(link.expires_at) < new Date()) {
-    throw new GoneError('link expire')
+    throw new GoneError('link expired')
   }
 
   // record before redirect
