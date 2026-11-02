@@ -48,7 +48,8 @@ jobs:
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch_name: >-
-            preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+            preview/pr-${{ github.event.number }}-${{
+                needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
           expires_at: ${{ env.EXPIRES_AT }}
 
@@ -89,7 +90,8 @@ jobs:
 #        with:
 #          project_id: ${{ vars.NEON_PROJECT_ID }}
 #          compare_branch: >-
-#            preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+#            preview/pr-${{ github.event.number }}-${{
+#                needs.setup.outputs.branch }}
 #          api_key: ${{ secrets.NEON_API_KEY }}
 
   delete_neon_branch:
@@ -103,5 +105,6 @@ jobs:
         with:
           project_id: ${{ vars.NEON_PROJECT_ID }}
           branch: >-
-            preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
+            preview/pr-${{ github.event.number }}-${{
+                needs.setup.outputs.branch }}
           api_key: ${{ secrets.NEON_API_KEY }}
