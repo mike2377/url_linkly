@@ -80,8 +80,9 @@ jobs:
 #   contents: read
 #   pull-requests: write
 #
-# You can also check out https://github.com/neondatabase/schema-diff-action
-# for more information on how to use the schema diff action.
+# You can also check out the following link for more information on how to use
+# the schema diff action:
+# https://github.com/neondatabase/schema-diff-action
 # You can uncomment the lines below to enable the schema diff action.
 #      - name: Post Schema Diff Comment to PR
 #        uses: neondatabase/schema-diff-action@v1
