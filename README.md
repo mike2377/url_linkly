@@ -50,8 +50,8 @@ This project aims to:
 ### Click Log with Keyset Pagination
 
 - `GET /links/:code/clicks?after=&limit=` returns `{ data, next_cursor }`
-- Uses `ID < $2 ORDER BY id DESC LIMIT $3` - **no OFFSET**
-- Cursor is the last seen click id; `null` means no more pages
+- Uses `id < $2 ORDER BY id DESC LIMIT $3` - **no OFFSET**
+- Cursor is the last seen click ID; `null` means no more pages
 - `limit` is bounded by Zod (`1..100`, default `20`)
 
 ### CSV Export
