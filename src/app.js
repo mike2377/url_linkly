@@ -12,7 +12,7 @@ import { errorHandler } from './middleware/errorHandler.js'
 const here = path.dirname(fileURLToPath(import.meta.url))
 const openapiSpec = JSON.parse(readFileSync(path.join(here, 'docs', 'openapi.json'), 'utf-8'))
 
-export function createApp() {
+export function createApp () {
   const app = express()
 
   // parse json request body

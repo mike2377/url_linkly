@@ -4,7 +4,7 @@ import request from 'supertest'
 import express from 'express'
 import { createRateLimiter } from '#src/middleware/rateLimit.js'
 
-function buildTestApp(max) {
+function buildTestApp (max) {
   const app = express()
   app.use(express.json())
   app.post('/x', createRateLimiter({ windowMs: 60_000, max }), (req, res) => {
