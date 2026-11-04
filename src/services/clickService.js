@@ -34,6 +34,11 @@ export async function recordClick (linkId, { referrer, userAgent }) {
 
 // pagination
 export async function listClickForLink (linkId, { after, limit }) {
+  // zod limit validation 1 to 100
+  if (!Number.isInteger(limit) || limit < 1) {
+    throw new Error(`listClick require limit greater than 1, ${limit}`)
+  }
+  
   const { rows } = await pool.query(
     `SELECT id, clicked_at, referrer, user_agent
     FROM clicks

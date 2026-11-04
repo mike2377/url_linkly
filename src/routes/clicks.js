@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { clicksQuerySchemas } from '../schemas/clickSchemas.js'
+import { clicksQuerySchema } from '../schemas/clickSchemas.js'
 import { findLinkByCode } from '../services/linkService.js'
 import { listClickForLink, streamClickCsv } from '../services/clickService.js'
 import { NotFoundError } from '../utils/errors.js'
@@ -15,7 +15,7 @@ clicksRouter.get('/:code/clicks.csv', async (req, res) => {
 
 // GET /LINKS/:code/clicks?after=&limit=
 clicksRouter.get('/:code/clicks', async (req, res) => {
-  const { after, limit } = clicksQuerySchemas.parse(req.query)
+  const { after, limit } = clicksQuerySchema.parse(req.query)
 
   const link = await findLinkByCode(req.params.code)
   if (!link) throw new NotFoundError('Link not found')

@@ -58,6 +58,20 @@ test('GET /links/:code/clicks rejects limit > 100', async () => {
   assert.equal(res.body.error, 'validation_error')
 })
 
+test('GET /links/:code/clicks reject limit=0 with 400', async () => {
+  await createTestLink({ code: 'zero' })
+  const res = await api().get('/links/zero/clicks?limit=0')
+  assert.equal(res.status, 400)
+  assert.equal(res.body.error, 'validation_error')
+})
+
+test('GET /links/:code/clicks reject negative limit with 400', async () => {
+  await createTestLink({ code: 'neg' })
+  const res = await api().get('/links/neg/clicks?limit=-5')
+  assert.equal(res.status, 400)
+  assert.equal(res.body.error, 'validation_error')
+})
+
 test('GET /links/:code/clicks.csv streams CSV with header and rows', async () => {
   await createTestLink({ code: 'csv' })
   for (let i = 0; i < 3; i++) {
