@@ -83,3 +83,25 @@ test('GET /links/:code return 404 for a unknow code', async () => {
   assert.equal(res.status, 404)
   assert.equal(res.body.error, 'not_found')
 })
+
+test('POST /links rejects malformed JSON with 400', async () => {
+  const { createServer } = await import('node:http')
+  const { createApp } = await import('../src/app.js')
+
+  const server = createServer(createApp())
+  await new Promise((resolve) => server.listen(0, resolve))
+  const port = server.address().port
+
+  try {
+    const res = await fetch(`http://localhost:${port}/links`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{bad json'
+    })
+    assert.equal(res.status, 400)
+    const body = await res.json()
+    assert.equal(body.message, 'Invalid JSON in request body')
+  } finally {
+    await new Promise((resolve) => server.close(resolve))
+  }
+})

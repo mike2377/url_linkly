@@ -5,6 +5,19 @@ import { HttpError } from '../utils/errors.js'
 // express requires to recognize this as an error handler
 // eslint-disable-next-line no-unused-vars
 export function errorHandler (err, req, res, next) {
+  // Malormed JSON body
+  const isMalformedJSON =
+    err.type === 'entity.parse.failed' ||
+    (err instanceof SyntaxError && err.status === 400) ||
+    (err.name === 'SyntaxError' && err.status === 400)
+
+  if (isMalformedJSON) {
+    return res.status(400).json({
+      error: 'validation_error',
+      message: 'Invalid JSON in request body'
+    })
+  }
+
   // zod validation errors
   if (err instanceof ZodError) {
     return res.status(400).json({
