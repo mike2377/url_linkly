@@ -250,13 +250,13 @@ Swagger UI: <<http://localhost:3000/docs>>
 
 ### Useful Scripts
 
-| Command | Description |
-| --- | --- |
-| `npm run dev` | Start server with `--watch` (auto-restart) |
-| `npm start` | Start server |
-| `npm test` | Run all tests against `linkly_test` |
-| `npm run lint` | Run ESLint on `src/` and `test/` |
-| `npm run format` | Run Prettier on the whole project |
+| Command            | Description                                |
+| ------------------ | ------------------------------------------ |
+| `npm run dev`      | Start server with `--watch` (auto-restart) |
+| `npm start`        | Start server                               |
+| `npm test`         | Run all tests against `linkly_test`        |
+| `npm run lint`     | Run ESLint on `src/` and `test/`           |
+| `npm run format`   | Run Prettier on the whole project          |
 | `npm run db:setup` | Apply `schema.sql` to the current database |
 
 ---
@@ -277,16 +277,16 @@ Every endpoint, tested live. Each pair shows the **Try it out** panel from Swagg
 
 ### Create a short link - `POST /links`
 
-| Request (Swagger UI) | Response (201 Created) |
-| :---: | :---: |
+|             Request (Swagger UI)             |             Response (201 Created)             |
+| :------------------------------------------: | :--------------------------------------------: |
 | ![Create request](images/create-request.png) | ![Create response](images/create-response.png) |
 
 ---
 
 ### Read link metadata - `GET /links/:code`
 
-| Request (Swagger UI) | Response (200 OK) |
-| :---: | :---: |
+|          Request (Swagger UI)          |            Response (200 OK)             |
+| :------------------------------------: | :--------------------------------------: |
 | ![Get request](images/get-request.png) | ![Get response](images/get-response.png) |
 
 ---
@@ -301,32 +301,32 @@ Swagger UI follows the target site
 
 ### Click log with keyset pagination - `GET /links/:code/clicks`
 
-| Request (Swagger UI) | Response (200 OK with cursor) |
-| :---: | :---: |
+|             Request (Swagger UI)             |         Response (200 OK with cursor)          |
+| :------------------------------------------: | :--------------------------------------------: |
 | ![Clicks request](images/clicks-request.png) | ![Clicks response](images/clicks-response.png) |
 
 ---
 
 ### CSV export — `GET /links/:code/clicks.csv`
 
-| Request (Swagger UI) | Response (CSV stream) |
-| :---: | :---: |
+|          Request (Swagger UI)          |          Response (CSV stream)           |
+| :------------------------------------: | :--------------------------------------: |
 | ![CSV request](images/csv-request.png) | ![CSV response](images/csv-response.png) |
 
 ---
 
 ### 🛡️ Duplicate code rejected — `POST /links` with existing code
 
-| Request (Swagger UI) | Response (409 Conflict) |
-| :---: | :---: |
+|               Request (Swagger UI)               |              Response (409 Conflict)               |
+| :----------------------------------------------: | :------------------------------------------------: |
 | ![Conflict request](images/conflict-request.png) | ![Conflict response](images/conflict-response.png) |
 
 ---
 
 ### 💚 Health check — `GET /health`
 
-| Request (Swagger UI) and Response (200 OK) |
-| :---: |
+|  Request (Swagger UI) and Response (200 OK)  |
+| :------------------------------------------: |
 | ![Health request](images/health-request.png) |
 
 ---
@@ -341,16 +341,16 @@ Runs `node:test` against `linkly_test`.
 
 **33 tests** cover:
 
-| Category | What's tested |
-| --- | --- |
-| Contract | 201/400/404/409/410/429 per endpoint |
-| Counter | `click_count` survives **50 concurrent redirects** without lost updates |
+| Category       | What's tested                                                                 |
+| -------------- | ----------------------------------------------------------------------------- |
+| Contract       | 201/400/404/409/410/429 per endpoint                                          |
+| Counter        | `click_count` survives **50 concurrent redirects** without lost updates       |
 | Zod validation | URL schemes (`javascript:`, `data:`, `file:` rejected), code patterns, limits |
-| Pagination | Cursor-based, no `OFFSET`, `next_cursor: null` at end |
-| CSV streaming | Header, rows, correct `Content-Type`/`Content-Disposition` |
-| Cascade delete | No orphan clicks after `DELETE /links/:code` |
-| Rate limiter | 429 after max, `Retry-After` header present |
-| Security | SQL injection attempts stay literal, `links` table survives |
+| Pagination     | Cursor-based, no `OFFSET`, `next_cursor: null` at end                         |
+| CSV streaming  | Header, rows, correct `Content-Type`/`Content-Disposition`                    |
+| Cascade delete | No orphan clicks after `DELETE /links/:code`                                  |
+| Rate limiter   | 429 after max, `Retry-After` header present                                   |
+| Security       | SQL injection attempts stay literal, `links` table survives                   |
 
 ---
 

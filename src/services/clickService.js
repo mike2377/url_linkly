@@ -3,7 +3,7 @@ import { NotFoundError } from '../utils/errors.js'
 import { writeCsvHeader, writeCsvRow } from '../utils/csv.js'
 
 // count click and record
-export async function recordClick (linkId, { referrer, userAgent }) {
+export async function recordClick(linkId, { referrer, userAgent }) {
   const client = await pool.connect()
   try {
     await client.query('BEGIN')
@@ -33,12 +33,12 @@ export async function recordClick (linkId, { referrer, userAgent }) {
 }
 
 // pagination
-export async function listClickForLink (linkId, { after, limit }) {
+export async function listClickForLink(linkId, { after, limit }) {
   // zod limit validation 1 to 100
   if (!Number.isInteger(limit) || limit < 1) {
     throw new Error(`listClick require limit greater than 1, ${limit}`)
   }
-  
+
   const { rows } = await pool.query(
     `SELECT id, clicked_at, referrer, user_agent
     FROM clicks
@@ -57,7 +57,7 @@ export async function listClickForLink (linkId, { after, limit }) {
 }
 
 // streams the full click loadind in memoriy
-export async function streamClickCsv (linkId, res) {
+export async function streamClickCsv(linkId, res) {
   writeCsvHeader(res, ['id', 'clicked_at', 'referrer', 'user_agent'], 'clicks.csv')
 
   const BATCH = 1000

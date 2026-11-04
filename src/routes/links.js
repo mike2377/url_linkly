@@ -9,7 +9,7 @@ export const linksRouter = Router()
 const createLinkLimiter = createRateLimiter({ windowMs: 60_000, max: 100 })
 
 // function one place to remove JSCPD for return POST and GET
-function serialLink (link, req) {
+function serialLink(link, req) {
   return {
     code: link.code,
     target_url: link.target_url,

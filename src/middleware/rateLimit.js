@@ -1,9 +1,9 @@
 // simple rate limiter per user
 
-export function createRateLimiter ({ windowMs, max }) {
+export function createRateLimiter({ windowMs, max }) {
   const buckets = new Map()
 
-  return function rateLimter (req, res, next) {
+  return function rateLimter(req, res, next) {
     const key = req.ip || 'unknown'
     const now = Date.now()
     const bucket = buckets.get(key)
