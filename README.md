@@ -160,6 +160,7 @@ url_linkly/
 │       └── neon_workflow.yml
 ├── scripts/
 │   └── db-setup.js
+│   ├── seeds.js
 ├── src/
 │   ├── app.js
 │   ├── server.js
@@ -196,6 +197,7 @@ url_linkly/
 │   ├── clicks.test.js
 │   ├── rateLimit.test.js
 │   └── security.test.js
+├── .dockerignore
 ├── .env.example
 ├── .eslintrc.json (eslint.local.config.js)
 ├── .gitignore
@@ -203,6 +205,8 @@ url_linkly/
 ├── .prettierignore
 ├── .prettierrc.json
 ├── .sqlfluff
+├── docker-compose.yml
+├── Dockerfile
 ├── package-log.json
 ├── package.json
 └── README.md
@@ -248,6 +252,16 @@ npm run dev
 The API is available at `http://localhost:3000`.
 Swagger UI: <<http://localhost:3000/docs>>
 
+## 🐳 Quick Start (Docker)
+
+The fastest way to run Linkly — one command, no local Postgres setup required.
+
+```bash
+git clone https://github.com/mike2377/url_linkly.git
+cd url_linkly
+docker compose up --build
+```
+
 ### Useful Scripts
 
 | Command            | Description                                |
@@ -258,6 +272,17 @@ Swagger UI: <<http://localhost:3000/docs>>
 | `npm run lint`     | Run ESLint on `src/` and `test/`           |
 | `npm run format`   | Run Prettier on the whole project          |
 | `npm run db:setup` | Apply `schema.sql` to the current database |
+
+---
+
+### Docker Scripts
+
+| Command | Description |
+| --- | --- |
+| `npm run docker:up` | Build and start the full stack (`db` + `app`) |
+| `npm run docker:down` | Stop containers (data preserved in the volume) |
+| `npm run docker:reset` | Stop and **delete all data** (fresh start) |
+| `npm run docker:logs` | Follow `app` logs in real time |
 
 ---
 
