@@ -23,9 +23,9 @@ async function connectWithRetry (maxRetries = 30, delayMs = 1000) {
     } catch (err) {
       console.log(`[seed] attempt ${i + 1}/${maxRetries} failed: ${err.message}`)
       try {
-        ;(await client, end())
+        ;(await client.end())
       } catch {}
-      if (i < maxRetries - 1) await new Promise((r) => setTimeout(r, delayMs))
+      if (i < maxRetries - 1) await new Promise((res) => setTimeout(res, delayMs))
     }
   }
   throw new Error(`Could not connect after ${maxRetries} attempts`)
@@ -59,7 +59,7 @@ try {
       await client.query(
         `INSERT INTO clicks (link_id, referrer, user_agent)
                 VALUES ($1, $2, $3)`,
-        [linkId, 1 === 0 ? 'https://github.com' : null, 'Mozilla/5.0 (seed) AppleWebKit/537.36']
+        [linkId, i === 0 ? 'https://github.com' : null, 'Mozilla/5.0 (seed) AppleWebKit/537.36']
       )
     }
     console.log(`[seed] ${link.code} -> ${link.target_url} (${link.clicks} clicks)`)
