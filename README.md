@@ -197,7 +197,6 @@ url_linkly/
 │   ├── clicks.test.js
 │   ├── rateLimit.test.js
 │   └── security.test.js
-├── .dockerignore
 ├── .env.example
 ├── .eslintrc.json (eslint.local.config.js)
 ├── .gitignore
@@ -205,8 +204,6 @@ url_linkly/
 ├── .prettierignore
 ├── .prettierrc.json
 ├── .sqlfluff
-├── docker-compose.yml
-├── Dockerfile
 ├── package-log.json
 ├── package.json
 └── README.md
@@ -249,18 +246,8 @@ npm run db:setup
 npm run dev
 ```
 
-The API is available at `http://localhost:3000`.
-Swagger UI: <<http://localhost:3000/docs>>
-
-## 🐳 Quick Start (Docker)
-
-The fastest way to run Linkly — one command, no local Postgres setup required.
-
-```bash
-git clone https://github.com/mike2377/url_linkly.git
-cd url_linkly
-docker compose up --build
-```
+The API is available at `https://localhost:3000`.
+Swagger UI: <<https://localhost:3000/docs>>
 
 ### Useful Scripts
 
@@ -275,20 +262,9 @@ docker compose up --build
 
 ---
 
-### Docker Scripts
-
-| Command | Description |
-| --- | --- |
-| `npm run docker:up` | Build and start the full stack (`db` + `app`) |
-| `npm run docker:down` | Stop containers (data preserved in the volume) |
-| `npm run docker:reset` | Stop and **delete all data** (fresh start) |
-| `npm run docker:logs` | Follow `app` logs in real time |
-
----
-
 ## 🌐 Live Demo
 
-🔗 **Deployed on Render:** [https://url-linkly.onrender.com](https://url-linkly.onrender.com)
+🔗 **Deployed on Render:**
 
 Swagger UI: [https://url-linkly.onrender.com/docs](https://url-linkly.onrender.com/docs)
 
@@ -320,7 +296,7 @@ Every endpoint, tested live. Each pair shows the **Try it out** panel from Swagg
 
 Swagger UI follows the target site
 
-> Redirecting `http://localhost:3000/sino` → `https://sinosourcing.store/products/750117308591`
+> Redirecting `https://localhost:3000/sino` → `https://sinosourcing.store/products/750117308591`
 
 ---
 

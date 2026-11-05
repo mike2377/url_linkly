@@ -16,12 +16,7 @@
     "lint": "eslint . --config eslint.local.config.js",
     "lint:fix": "eslint . --config eslint.local.config.js --fix",
     "format": "prettier --write .",
-    "format:check": "prettier --check .",
-    "db:setup": "node scripts/db-setup.js",
-    "docker:up": "docker compose up --build",
-    "docker:down": "docker compose down",
-    "docker:reset": "docker compose down -v",
-    "docker:logs": "docker compose logs -f app"
+    "format:check": "prettier --check ."
   },
   "keywords": [],
   "dependencies": {
