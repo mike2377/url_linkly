@@ -6,21 +6,21 @@ services:
       POSTGRES_PASSWORD: linkly_password
       POSTGRES_DB: linkly
     ports:
-      - "5433:5432"
+      - '5433:5432'
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
   app:
     build: .
     ports:
-      - "3000:3000"
+      - '3000:3000'
     environment:
       NODE_ENV: production
       PORT: 3000
       DATABASE_URL: postgres://linkly:linkly_password@db:5432/linkly
     depends_on:
       - db
-    command: ["sh", "-c", "node scripts/db-setup.js --if-empty && node src/server.js"]
+    command: ['sh', '-c', 'node scripts/db-setup.js --if-empty && node scripts/seed.js && node src/server.js']
     restart: unless-stopped
 
 volumes:

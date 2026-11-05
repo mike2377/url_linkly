@@ -5,11 +5,7 @@ const url = new URL(config.databaseUrl)
 url.searchParams.delete('channel_binding')
 
 // SSL is required for NEON not in local
-const isLocal =
-  url.hostname === 'localhost' ||
-  url.hostname === '127.0.0.1' ||
-  url.hostname === 'db' ||
-  !url.hostname.includes('.')
+const isLocal = url.hostname === 'localhost' || url.hostname === '127.0.0.1' || url.hostname === 'db' || !url.hostname.includes('.')
 
 export const pool = new pg.Pool({
   connectionString: url.toString(),
