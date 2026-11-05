@@ -27,6 +27,15 @@ export function createApp () {
   app.use('/links', clicksRouter)
   app.use('/', redirectRouter)
 
+  app.get('/', (req, res) => {
+    res.json({
+      name: 'linkly API',
+      status: 'running',
+      docs: '/docs',
+      health: '/health'
+    })
+  })
+
   // Catch unmatched routes
   app.use((req, res) => {
     res.status(404).json({ error: 'not_found', message: 'Route not found' })
