@@ -13,7 +13,6 @@ export async function recordClick (linkId, { referrer, userAgent }) {
 
     // the link delete betwen findLinkbyCode and here and roll back click row orpan
     if (result.rowCount === 0) {
-      await client.query('ROLLBACK')
       throw new NotFoundError('link no longer exists')
     }
 

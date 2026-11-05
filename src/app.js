@@ -14,6 +14,7 @@ const openapiSpec = JSON.parse(readFileSync(path.join(here, 'docs', 'openapi.jso
 
 export function createApp () {
   const app = express()
+  app.set('trust proxy', 1)
 
   // parse json request body
   app.use(express.json({ limit: '16kb' }))
