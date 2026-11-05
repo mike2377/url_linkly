@@ -25,7 +25,7 @@ async function connectWithRetry (maxRetries = 30, delayMs = 1000) {
       try {
         ;(await client.end())
       } catch {}
-      if (i < maxRetries - 1) await new Promise((res) => setTimeout(res, delayMs))
+      if (i < maxRetries - 1) await new Promise((resolve, reject) => setTimeout(resolve, delayMs))
     }
   }
   throw new Error(`Could not connect after ${maxRetries} attempts`)
