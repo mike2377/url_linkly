@@ -160,7 +160,7 @@ url_linkly/
 │       └── neon_workflow.yml
 ├── scripts/
 │   └── db-setup.js
-│   ├── seeds.js
+│   ├── seed.js
 ├── src/
 │   ├── app.js
 │   ├── server.js
@@ -246,8 +246,8 @@ npm run db:setup
 npm run dev
 ```
 
-The API is available at `https://localhost:3000`.
-Swagger UI: <<https://localhost:3000/docs>>
+The API is available locally at `http://localhost:3000`.
+Swagger UI: `https://localhost:3000/docs`
 
 ### Useful Scripts
 
@@ -256,7 +256,7 @@ Swagger UI: <<https://localhost:3000/docs>>
 | `npm run dev`      | Start server with `--watch` (auto-restart) |
 | `npm start`        | Start server                               |
 | `npm test`         | Run all tests against `linkly_test`        |
-| `npm run lint`     | Run ESLint on `src/` and `test/`           |
+| `npm run lint`     | Run ESLint on the whole project            |
 | `npm run format`   | Run Prettier on the whole project          |
 | `npm run db:setup` | Apply `schema.sql` to the current database |
 
@@ -380,6 +380,8 @@ The obvious approach (`SELECT click_count; UPDATE click_count = N + 1`) loses up
 Neon's default connection string includes `&channel_binding=require`, which the `pg` driver doesn't support. Without explicit SSL config, Node rejects the self-signed certificate.
 
 **Solution**: strip `channel_binding` from the URL at pool creation, and add `ssl: { rejectUnauthorized: false }` to the `pg.Pool` config. Done once in `src/db.js`, not repeated across services.
+
+- **Expiry validation**: Links with a past `expires_at` are accepted on creation (201) but return 410 when visited. This is deliberate - it allows creating links that are already retired (useful for migrations or testing), and the expiry check is enforced at read-time rather than write-time
 
 ---
 
